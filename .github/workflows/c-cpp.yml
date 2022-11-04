@@ -2,9 +2,9 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ "patch-1" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "patch-1" ]
+    branches: [ "main" ]
   release:
     # https://stackoverflow.com/questions/59319281/github-action-different-between-release-created-and-published
     types: [published]
