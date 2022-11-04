@@ -39,11 +39,15 @@ jobs:
 
       - name: Run executable
         run: gen-epub -v
+        
+      - name: Package
+        run: |
+          tar -czvf build_kepub.tar.gz build
 
 
       # https://github.com/softprops/action-gh-release
       - name: Release
-        uses: JamesIves/github-pages-deploy-action@4.0.0
-        with: 
-        branch: gh-builds
-        folder: build
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-dist
+          path: build_kepub.tar.gz
