@@ -278,6 +278,7 @@ const std::string user_agent =
     "boluobao/4.8.66(iOS;15.5)/appStore/" + device_token;
 const std::string user_agent_rss =
     "SFReader/4.8.66 (iPhone; iOS 15.5; Scale/3.00)";
+const std::string prox = "http://172.23.176.1:8080"
 
 std::string sf_security() {
   std::string uuid = klib::uuid();
@@ -293,7 +294,7 @@ std::string sf_security() {
 }  // namespace
 
 std::string http_get(const std::string &url) {
-  request.set_no_proxy();
+  request.set_proxy(prox);
   request.set_user_agent(user_agent);
   request.basic_auth(user_name, password);
 #ifndef NDEBUG
@@ -309,7 +310,7 @@ std::string http_get(const std::string &url) {
 }
 
 std::string http_get_rss(const std::string &url) {
-  request.set_no_proxy();
+  request.set_proxy(prox);
   request.set_user_agent(user_agent_rss);
 #ifndef NDEBUG
   request.verbose(true);
@@ -323,7 +324,7 @@ std::string http_get_rss(const std::string &url) {
 }
 
 std::string http_post(const std::string &url, const std::string &json) {
-  request.set_no_proxy();
+  request.set_proxy(prox);
   request.set_user_agent(user_agent);
   request.basic_auth(user_name, password);
 #ifndef NDEBUG
