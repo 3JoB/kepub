@@ -1,0 +1,49 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "patch-1" ]
+  pull_request:
+    branches: [ "patch-1" ]
+  release:
+    # https://stackoverflow.com/questions/59319281/github-action-different-between-release-created-and-published
+    types: [published]
+  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: kaiserlancelot/kenv:latest
+
+    steps:
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: bash script/build.sh
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release -j"$(nproc)"
+
+      - name: CPack
+        run: cpack
+        working-directory: build
+
+      - name: Install
+        run: sudo dpkg -i kepub*.deb
+        working-directory: build
+
+      - name: Run executable
+        run: gen-epub -v
+
+      # https://github.com/softprops/action-gh-release
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/kepub*.tar.xz
+            build/kepub*.deb
