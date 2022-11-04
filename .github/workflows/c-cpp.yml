@@ -8,8 +8,6 @@ on:
   release:
     # https://stackoverflow.com/questions/59319281/github-action-different-between-release-created-and-published
     types: [published]
-    tags:
-      - "v*.*.*"
   
 
 jobs:
@@ -41,14 +39,11 @@ jobs:
 
       - name: Run executable
         run: gen-epub -v
-      
-      - name: Package
-        run: tar -czvf allxy_kepub.tar.gz build
+
 
       # https://github.com/softprops/action-gh-release
       - name: Release
-        uses: JasonEtco/upload-to-release@master
-        with:
-          args: allxy_kepub.tar.gz application/octet-stream
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        with: 
+        branch: gh-builds
+        folder: build
