@@ -278,7 +278,7 @@ const std::string user_agent =
     "boluobao/4.8.66(iOS;15.5)/appStore/" + device_token;
 const std::string user_agent_rss =
     "SFReader/4.8.66 (iPhone; iOS 15.5; Scale/3.00)";
-const std::string prox = "http://172.23.176.1:8080"
+const std::string prox = "http://172.23.176.1:8080";
 
 std::string sf_security() {
   std::string uuid = klib::uuid();
